@@ -11,3 +11,5 @@ header_text = st.write(texts['intro_1'])
 
 if st.sidebar.checkbox("Press to Begin"):
     st.write(st.__version__)
+    st.write(st.__version__)
+    header_text = st.empty()
