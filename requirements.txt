@@ -2,4 +2,4 @@ librosa==0.8.0
 streamlit==0.74.1
 tensorflow==2.4.0
 pydot==1.4.1
-#brew install graphviz
+efficientnet==1.1.1
