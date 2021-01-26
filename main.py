@@ -4,6 +4,9 @@ from engine.read_data import *
 from engine.model import *
 import os
 from PIL import Image
+
+lang = 'en'  # 'uk', 'ru' ...
+
 # config.json has page content
 with open('engine/config.json') as conf_file: # load JSON config file
     configGlobal = json.load(conf_file)
@@ -17,19 +20,21 @@ show_bird_3 = st.empty()    # this will show 3rd prediction picture (bird_3)
 # declare headers
 header.header(texts['header_1'])
 header_text.write(texts['intro_1'])
-test_dir = os.path.join(# todo: change this
-                        os.path.dirname(os.path.realpath(__file__)), # where am i?
+test_dir = os.path.join(  # todo: change this
+                        os.path.dirname(os.path.realpath(__file__)),  # where am i?
                         'test_audio')
 
 audiofiles = get_audio_files_in_dir(test_dir)
 
 if len(audiofiles) == 0:
-    st.write("Put some audio files in your test directory (%s) to activate this player."   % test_dir)
+    st.write("Put some audio files in your test directory (%s) to activate this player." % test_dir)
 else:
     filename = st.sidebar.selectbox("Select mp3 from test directory (%s)" % test_dir, audiofiles, 0)
     audiopath = os.path.join(test_dir, filename)
 
+
 if os.path.exists(audiopath):
+    print('\naudiopath', audiopath)
     st.sidebar.audio(audiopath)
     samples_db, spectrogram = read_mp3(audiopath)
     st.image('https://cdn.download.ams.birds.cornell.edu/api/v1/asset/168730581/2400', use_column_width=True)
@@ -38,4 +43,9 @@ if os.path.exists(audiopath):
     #col1.header('Spectrogram')
     st.image(Image.fromarray(np.rot90(spectrogram)))
 
+    # map
+    map_pydeck = form_pydeck(audiopath)
+    st.pydeck_chart(map_pydeck)
+
+uploaded = st.sidebar.file_uploader('Upload mp3')  # supposed to be an mp3 uploaded file
 

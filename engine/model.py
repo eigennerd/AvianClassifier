@@ -11,7 +11,8 @@ from tensorflow.keras.applications import EfficientNetB0
 
 birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 
-classes_to_predict=sorted(birds_df.ebird_code.unique())
+classes_to_predict = sorted(birds_df.ebird_code.unique())
+
 
 def load_model(classes_to_predict=classes_to_predict, weights_path='model/EN4_cpu_20sp_1000s_20e.h5'):
     input_shape = (216, 216, 3)
@@ -35,7 +36,9 @@ def load_model(classes_to_predict=classes_to_predict, weights_path='model/EN4_cp
 
     return model
 
+
 model = load_model()
+
 
 def read_mp3(uploaded_mp3):
     try:
@@ -57,9 +60,9 @@ def read_mp3(uploaded_mp3):
                 db_array = (np.asarray(normalised_db) * 255).astype(np.uint8)
                 spectre_array = np.array([db_array, db_array, db_array]).T
                 #spectre_image = Image.fromarray(spectre_array)
-                prediction = model.predict(spectre_array.reshape(1,216,216,3))
+                prediction = model.predict(spectre_array.reshape(1, 216, 216, 3))
                 predicted_bird=classes_to_predict[np.argmax(prediction)]
-                output={
+                output = {
                          "subsample_begin": idx,
                          "subsample_id": sample_name,
                          "pred_bird": predicted_bird,
