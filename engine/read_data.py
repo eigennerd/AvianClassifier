@@ -66,3 +66,21 @@ def extract_coords(audiopath, train_path, meta_path):
     coords['alt'] = pd.to_numeric(coords['alt'].replace(['?', '-'], 0))
     print(coords.head(1))
     return coords
+
+
+
+def get_vernacular(scientific_name='troglodytes troglodytes'):
+    '''
+    function that uses GBIF API to translate species scientific name into common English
+
+    :param scientific_name: str
+    :return: common_name: str
+    '''
+    res = requests.get('https://api.gbif.org/v1/species?name={}'.format(scientific_name.lower()))
+    key = json.loads(res.text)['results'][0]['speciesKey'] # get species key
+    res2 = requests.get('https://api.gbif.org/v1/species/{}/vernacularNames'.format(key))
+    for dict_element in json.loads(res2.text)['results']:
+        if dict_element['language']=='eng': # get the last english (and perhaps the most correct) vernacular
+            to_return = dict_element['vernacularName']
+
+    return re.sub(' \((.*?)\)','', to_return) # without anything in parentheses
