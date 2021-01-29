@@ -5,7 +5,7 @@ from engine.model import *
 import os
 from PIL import Image
 
-lang = st.sidebar.radio(label='Language options:', options=['en','uk','ru','pl'])
+lang = st.sidebar.radio(label='Language options:', options=['en','ua','ru','pl'])
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 # config.json has page content
@@ -53,7 +53,7 @@ if os.path.exists(audiopath):
     st.image(Image.fromarray(np.rot90(spectrogram)))
 
     # map
-    #map_pydeck = form_pydeck(audiopath)
-    #st.pydeck_chart(map_pydeck)
+    map_pydeck = form_pydeck(audiopath)
+    st.pydeck_chart(map_pydeck)
 
 
