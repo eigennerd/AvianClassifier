@@ -5,7 +5,8 @@ from engine.model import *
 import os
 from PIL import Image
 
-lang = 'en'  # 'uk', 'ru' ...
+lang = st.sidebar.radio(label='Language options:', options=['en','uk','ru','pl'])
+st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 # config.json has page content
 with open('engine/config.json') as conf_file: # load JSON config file
@@ -32,20 +33,27 @@ else:
     filename = st.sidebar.selectbox("Select mp3 from test directory (%s)" % test_dir, audiofiles, 0)
     audiopath = os.path.join(test_dir, filename)
 
+uploaded = st.sidebar.file_uploader('Upload mp3')  # supposed to be an mp3 uploaded file
+if uploaded:
+    audiopath=uploaded
 
 if os.path.exists(audiopath):
     print('\naudiopath', audiopath)
     st.sidebar.audio(audiopath)
-    samples_db, spectrogram = read_mp3(audiopath)
-    st.image('https://cdn.download.ams.birds.cornell.edu/api/v1/asset/168730581/2400', use_column_width=True)
+    samples_db, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
+
+    col1, col2 = st.beta_columns(2) ## names and translation
+    col1.write(bird_scientific_name)
+    col2.write(get_vernacular(bird_scientific_name, lang=lang))
+
+    st.image(bird_url, use_column_width=True)
     st.write(samples_db.prediction)
     #col1 = st.beta_columns(1)
     #col1.header('Spectrogram')
     st.image(Image.fromarray(np.rot90(spectrogram)))
 
     # map
-    map_pydeck = form_pydeck(audiopath)
-    st.pydeck_chart(map_pydeck)
+    #map_pydeck = form_pydeck(audiopath)
+    #st.pydeck_chart(map_pydeck)
 
-uploaded = st.sidebar.file_uploader('Upload mp3')  # supposed to be an mp3 uploaded file
 

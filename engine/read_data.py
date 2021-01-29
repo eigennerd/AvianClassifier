@@ -98,17 +98,11 @@ def get_vernacular(scientific_name='troglodytes troglodytes', lang='en'):
     res = requests.get('https://api.gbif.org/v1/species?name={}'.format(scientific_name.lower()))
     key = json.loads(res.text)['results'][0]['speciesKey']  # get species key
     res2 = requests.get('https://api.gbif.org/v1/species/{}/vernacularNames'.format(key))
+    vernacularName = ''
     for dict_element in json.loads(res2.text)['results']:
         if dict_element['language'] == 'eng':  # get the last english (and perhaps the most correct) vernacular
-            to_return = dict_element['vernacularName']
+            vernacularName = dict_element['vernacularName']
 
-    to_return = re.sub(' \((.*?)\)', '', to_return)  # without anything in parentheses
+    out = scientific_name if vernacularName=='' else re.sub(' \((.*?)\)', '', vernacularName)  # without anything in parentheses
 
-    if lang == 'en':
-        pass
-    else:
-        try:
-            to_return = Translator().translate(to_return, dest=lang.lower()).text
-        except:
-            pass
-    return to_return
+    return (out if lang == 'en' else Translator().translate(out, dest=lang.lower()).text)

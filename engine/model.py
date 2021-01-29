@@ -11,7 +11,7 @@ from tensorflow.keras.applications import EfficientNetB0
 
 birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 
-classes_to_predict = sorted(birds_df.ebird_code.unique())
+classes_to_predict = sorted(birds_df.ebird_code.unique()) # TODO: add 'nocall' later
 
 
 def load_model(classes_to_predict=classes_to_predict, weights_path='model/EN4_cpu_20sp_1000s_20e.h5'):
@@ -41,6 +41,15 @@ model = load_model()
 
 
 def read_mp3(uploaded_mp3):
+    '''
+
+    :param uploaded_mp3:
+    :return:
+                #  complete output
+                #  spectra of the processed mp3
+                #  url of the predicted bird
+                #  Scientific name
+    '''
     try:
         wave_data, wave_rate = librosa.load(uploaded_mp3)
 
@@ -75,6 +84,11 @@ def read_mp3(uploaded_mp3):
                 else:
                     output_array = np.concatenate((output_array, spectre_array), axis=0)
 
-        return samples_from_file, output_array
-    except:
-        raise
+        return  samples_from_file, \
+                output_array, \
+                birds_df.loc[birds_df.ebird_code==predicted_bird].url.values[0],\
+                "{} {}".format(birds_df.loc[birds_df.ebird_code == predicted_bird].gen.values[0], birds_df.loc[birds_df.ebird_code == predicted_bird].sp.values[0])
+
+
+    except Exception as e:
+        print(e)
