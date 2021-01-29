@@ -7,7 +7,7 @@
   },
   "demo": {
     "header_1": "Streamlit Template Demo",
-    "intro_1": "This app demonstrates basic capabilities of the Streamlit technology, which may embed most popular high-level ML libraries - all to quickly draft the data insights and perform ML on the go. \n Please refer to the [Streamlit Documentation](https://docs.streamlit.io/en/stable/) and their [Github] (https://github.com/streamlit/streamlit) pages. An extensive library of working examples of widgets can be found [here](http://awesome-streamlit.org/). Also check out a (quite helpful!) [cheat sheet](https://share.streamlit.io/daniellewisdl/streamlit-cheat-sheet/master/app.py). Use toggle on the sidebar to begin demonstration.",
+    "intro_1": "",
     "header_2": "Streamlit Template Demo - Avian Classifier" ,
     "intro_2": " An important ```@st.cache()``` function decorator is the heart of Streamlit, whenenever data needs to be downloaded just once (e.g. in this case from [John Hopkins University](https://github.com/CSSEGISandData/COVID-19/)). It is safely stored in cache until further action ([some rules apply](https://docs.streamlit.io/en/stable/caching.html)).",
     "intro_2_1": "The built-in Streamlit functions are flexible enough for various types of output. Unfortunately yet, as of Streamlit VVVVV, [Dash](https://github.com/plotly/dash) is not naturally supported, however can be used in a stand-alone server like DTale above. Streamlit is actively updated with useful features, e.g, with v0.63, an option to Bring-Your-Own-Components [has been introduced](https://github.com/streamlit/streamlit/blob/develop/docs/streamlit_components.md). ",

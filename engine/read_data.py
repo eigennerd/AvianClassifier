@@ -4,6 +4,10 @@ import streamlit as st
 import os
 import random
 import pydeck as pdk
+import json
+import requests
+import re
+from googletrans import Translator
 from settings import *
 
 AUDIO_EXTENSIONS = ["wav", "mp3"]
@@ -11,6 +15,10 @@ AUDIO_EXTENSIONS = ["wav", "mp3"]
 
 @st.cache()
 def get_audio_files_in_dir(directory):
+    '''
+    :param directory: default directory to pick mp3 files from
+    :return: list of mp3 files
+    '''
     out = ['<select>']
     for item in os.listdir(directory):
         try:
@@ -24,6 +32,10 @@ def get_audio_files_in_dir(directory):
 
 
 def form_pydeck(audiopath):
+    '''
+    :param audiopath:
+    :return:
+    '''
     df = extract_coords(audiopath, train_data, meta)
 
     layer = pdk.Layer(
@@ -55,6 +67,12 @@ def form_pydeck(audiopath):
 
 
 def extract_coords(audiopath, train_path, meta_path):
+    '''
+    :param audiopath:
+    :param train_path:
+    :param meta_path:
+    :return:
+    '''
     metadata = pd.read_csv(meta_path, encoding="ISO-8859-1", low_memory=False)
     num = float(audiopath.split('/')[-1].split('.')[0][4:])
     ebird_code = metadata[metadata['o'] == num]['ebird_code'].values[0]
@@ -69,18 +87,28 @@ def extract_coords(audiopath, train_path, meta_path):
 
 
 
-def get_vernacular(scientific_name='troglodytes troglodytes'):
+def get_vernacular(scientific_name='troglodytes troglodytes', lang='en'):
     '''
     function that uses GBIF API to translate species scientific name into common English
+    then it uses google api to translate that name into any other language if specified
 
     :param scientific_name: str
     :return: common_name: str
     '''
     res = requests.get('https://api.gbif.org/v1/species?name={}'.format(scientific_name.lower()))
-    key = json.loads(res.text)['results'][0]['speciesKey'] # get species key
+    key = json.loads(res.text)['results'][0]['speciesKey']  # get species key
     res2 = requests.get('https://api.gbif.org/v1/species/{}/vernacularNames'.format(key))
     for dict_element in json.loads(res2.text)['results']:
-        if dict_element['language']=='eng': # get the last english (and perhaps the most correct) vernacular
+        if dict_element['language'] == 'eng':  # get the last english (and perhaps the most correct) vernacular
             to_return = dict_element['vernacularName']
 
-    return re.sub(' \((.*?)\)','', to_return) # without anything in parentheses
+    to_return = re.sub(' \((.*?)\)', '', to_return)  # without anything in parentheses
+
+    if lang == 'en':
+        pass
+    else:
+        try:
+            to_return = Translator().translate(to_return, dest=lang.lower()).text
+        except:
+            pass
+    return to_return
