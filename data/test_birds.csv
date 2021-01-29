@@ -1,21 +1,21 @@
-o,gen,sp,ssp,en,pl,ua,ru,url,file,lic,wiki,ebird_code
-85,Coccothraustes,coccothraustes,,Hawfinch,Grubodziób zwyczajny,?????????,???????????? ???????,https://upload.wikimedia.org/wikipedia/commons/8/85/Coccothraustes_coccothraustes_Parco_Della_Piana_around_Firenze%2C_Italy.jpg,none,Wikimedia Commons,,cocccocc
-18,Crex,Crex,,Corn crake,Derkacz,?????? (????),?????????,https://www.naturepl.com/cache/pcache2/00575896.jpg,none,Nature Picture Library,,crexcrex
-88,Emberiza,citrinella,,Yellowhammer,Trznadel zwyczajny,???????? ????????,???????????? ???????,"https://res.cloudinary.com/fleetnation/image/private/c_fit,w_1120/g_south,l_text:style_gothic2:%C2%A9%20AGAMI,o_20,y_10/g_center,l_watermark4,o_25,y_50/v1559817731/cptw489f1fnkujkfk1re.jpg",none,Picfair,,embecitr
-,Ficedula,parva,,Red-breasted Flycatcher,Mucho?ówka ma?a,????????? ????,????? ?????????,https://i.pinimg.com/originals/ab/b6/87/abb68708bf9c4a5fe7c44028bd960912.jpg,none,Amit Pawashe,,ficeparv
-68,Fringilla,coelebs,,Common Chaffinch,Zi?ba zwyczajna,??????,??????,https://www.tiplingprints.com/p/424/chaffinch-finch-bird-male-fringilla-coelebs-8952411.jpg,none,David Tipling,,frincoel
-65,Luscinia,megarhynchos,,Common Nightingale,S?owik rdzawy ,????????? ????????,???????? ???????,https://image.freepik.com/free-photo/common-nightingale-birds-song-birds-luscinia-megarhynchos_153442-1363.jpg,none,Freepik,,luscmega
-63,Passer,domesticus,,House Sparrow,Wróbel zwyczajny,???????? ??????,??????? ???????,https://media.gettyimages.com/photos/house-sparrow-passer-domesticus-world-sparrow-day-picture-id1208171480,none,Gettyimages,,passdome
-40,Sitta,europea,,Eurasian Nuthatch,Kowalik zwyczajny,?????? ?????????,???????????? ?????????,https://media.featherbase.info/images/000479_full.jpg,none,digicamfotos.ch,,sitteuro
-59,Troglodytes,troglodytes,,Eurasian wren,Strzy?yk zwyczajny,?????? ????,?????????,https://www.monaconatureencyclopedia.com/wp-content/uploads/2016/09/1_alvaro.jpg,none,Monaco Nature,,trogtrog
-82,Turdus,iliacus,,Redwing,Dro?dzik,????? ??????????,??????????,https://media.gettyimages.com/photos/redwing-turdus-iliacus-skgarrstur-picture-id156266631,none,Gettyimages,,turdilia
-81,Turdus,philomelos,,Song Thrush,Drozd ?piewak,????? ????????,?????? ?????,https://a4.pbase.com/o10/09/881409/1/166916957.3I3xYeBB.tordobottaccio2722.jpg,none,Carlo Galliani,,turdphil
-,Parus,major,,Great tit,Bogatka zwyczajna,?????? ??????,??????? ??????,https://talesofnature.com/wp-content/uploads/2017/04/Koolmees-03-791x1024.jpg,none,Mike Melis,,parumajo
-,Pica,pica,,Eurasian Magpie,Sroka zwyczajna,?????? ????????????,?????? ????????,https://static1.bigstockphoto.com/4/9/2/large1500/294799966.jpg,none,Big Stock Photo,,picapica
-,Athene,noctua,,Little Owl,Pójd?ka zwyczajna,??????? ???,??? ??????,https://www.naturepl.com/cache/pcache2/01400259.jpg,none,Andy Rouse,,athenoct
-,Erithacus,rubecula,,European Robin,Rudzik (ptak),????????? (????),???????,https://www.naturepl.com/cache/pcache2/00583351.jpg,none,Nature Picture Library,,eritrube
-,Phylloscopus,collybita,,Common Chiffchaff,Pierwiosnek (ptak),????????-???????,???????-?????????,https://image.freepik.com/free-photo/common-chiffchaff-sitting-pine-branch_260896-61.jpg,none,Freepik,,phylcoll
-,Phylloscopus,trochilus,,Willow warbler,Piecuszek,???????? ????????,???????-????????,https://upload.wikimedia.org/wikipedia/commons/5/5b/Willow_Warbler_Phylloscopus_trochilus.jpg,none,Wikimedia Commons,,phyltroc
-,Picus,canus,,Grey-headed woodpecker,Dzi?cio? zielonosiwy,????? ????,????? ?????,https://www.naturepl.com/cache/pcache2/00442012.jpg,none,Nature Picture Library,,picucanu
-,Garrulus,glandarius,,Eurasian jay,Sójka zwyczajna,?????,?????,https://previews.123rf.com/images/jmrocek/jmrocek2001/jmrocek200100133/138280179-vertical-composition-of-eurasian-jay-garrulus-glandarius-sitting-on-moss-covered-trunk-in-autumn-for.jpg,none,123RF.com,,garrglan
-,Hirundo,rustica,,Barn swallow,Dymówka,???????? ????????,??????????? ????????,https://www.naturepl.com/cache/pcache2/01354948.jpg,none,Nature Picture Library,,hirurust
+o,gen,sp,ssp,en,url,file,lic,wiki,ebird_code
+85,Coccothraustes,coccothraustes,,Hawfinch,https://upload.wikimedia.org/wikipedia/commons/8/85/Coccothraustes_coccothraustes_Parco_Della_Piana_around_Firenze%2C_Italy.jpg,none,Wikimedia Commons,,cocccocc
+18,Crex,Crex,,Corn crake,https://www.naturepl.com/cache/pcache2/00575896.jpg,none,Nature Picture Library,,crexcrex
+88,Emberiza,citrinella,,Yellowhammer,"https://res.cloudinary.com/fleetnation/image/private/c_fit,w_1120/g_south,l_text:style_gothic2:%C2%A9%20AGAMI,o_20,y_10/g_center,l_watermark4,o_25,y_50/v1559817731/cptw489f1fnkujkfk1re.jpg",none,Picfair,,embecitr
+,Ficedula,parva,,Red-breasted Flycatcher,https://i.pinimg.com/originals/ab/b6/87/abb68708bf9c4a5fe7c44028bd960912.jpg,none,Amit Pawashe,,ficeparv
+68,Fringilla,coelebs,,Common Chaffinch,https://www.tiplingprints.com/p/424/chaffinch-finch-bird-male-fringilla-coelebs-8952411.jpg,none,David Tipling,,frincoel
+65,Luscinia,megarhynchos,,Common Nightingale,https://image.freepik.com/free-photo/common-nightingale-birds-song-birds-luscinia-megarhynchos_153442-1363.jpg,none,Freepik,,luscmega
+63,Passer,domesticus,,House Sparrow,https://media.gettyimages.com/photos/house-sparrow-passer-domesticus-world-sparrow-day-picture-id1208171480,none,Gettyimages,,passdome
+40,Sitta,europea,,Eurasian Nuthatch,https://media.featherbase.info/images/000479_full.jpg,none,digicamfotos.ch,,sitteuro
+59,Troglodytes,troglodytes,,Eurasian wren,https://www.monaconatureencyclopedia.com/wp-content/uploads/2016/09/1_alvaro.jpg,none,Monaco Nature,,trogtrog
+82,Turdus,iliacus,,Redwing,https://media.gettyimages.com/photos/redwing-turdus-iliacus-skgarrstur-picture-id156266631,none,Gettyimages,,turdilia
+81,Turdus,philomelos,,Song Thrush,https://a4.pbase.com/o10/09/881409/1/166916957.3I3xYeBB.tordobottaccio2722.jpg,none,Carlo Galliani,,turdphil
+,Parus,major,,Great tit,https://talesofnature.com/wp-content/uploads/2017/04/Koolmees-03-791x1024.jpg,none,Mike Melis,,parumajo
+,Pica,pica,,Eurasian Magpie,https://static1.bigstockphoto.com/4/9/2/large1500/294799966.jpg,none,Big Stock Photo,,picapica
+,Athene,noctua,,Little Owl,https://www.naturepl.com/cache/pcache2/01400259.jpg,none,Andy Rouse,,athenoct
+,Erithacus,rubecula,,European Robin,https://www.naturepl.com/cache/pcache2/00583351.jpg,none,Nature Picture Library,,eritrube
+,Phylloscopus,collybita,,Common Chiffchaff,https://image.freepik.com/free-photo/common-chiffchaff-sitting-pine-branch_260896-61.jpg,none,Freepik,,phylcoll
+,Phylloscopus,trochilus,,Willow warbler,https://upload.wikimedia.org/wikipedia/commons/5/5b/Willow_Warbler_Phylloscopus_trochilus.jpg,none,Wikimedia Commons,,phyltroc
+,Picus,canus,,Grey-headed woodpecker,https://www.naturepl.com/cache/pcache2/00442012.jpg,none,Nature Picture Library,,picucanu
+,Garrulus,glandarius,,Eurasian jay,https://previews.123rf.com/images/jmrocek/jmrocek2001/jmrocek200100133/138280179-vertical-composition-of-eurasian-jay-garrulus-glandarius-sitting-on-moss-covered-trunk-in-autumn-for.jpg,none,123RF.com,,garrglan
+,Hirundo,rustica,,Barn swallow,https://www.naturepl.com/cache/pcache2/01354948.jpg,none,Nature Picture Library,,hirurust
