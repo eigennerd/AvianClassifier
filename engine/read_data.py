@@ -82,19 +82,19 @@ def extract_coords(audiopath, train_path, meta_path):
     coords = trn_df[trn_df['ebird_code'] == ebird_code][['lat', 'lng', 'alt']]
     coords.dropna(inplace=True)
     coords['alt'] = pd.to_numeric(coords['alt'].replace(['?', '-'], 0))
-    print(coords.head(1))
     return coords
 
 
-
 def get_vernacular(scientific_name='troglodytes troglodytes', lang='en'):
-    '''
+    """
     function that uses GBIF API to translate species scientific name into common English
     then it uses google api to translate that name into any other language if specified
 
+    :param lang:
+    :type lang:
     :param scientific_name: str
     :return: common_name: str
-    '''
+    """
     res = requests.get('https://api.gbif.org/v1/species?name={}'.format(scientific_name.lower()))
     key = json.loads(res.text)['results'][0]['speciesKey']  # get species key
     res2 = requests.get('https://api.gbif.org/v1/species/{}/vernacularNames'.format(key))
@@ -103,6 +103,7 @@ def get_vernacular(scientific_name='troglodytes troglodytes', lang='en'):
         if dict_element['language'] == 'eng':  # get the last english (and perhaps the most correct) vernacular
             vernacularName = dict_element['vernacularName']
 
-    out = scientific_name if vernacularName=='' else re.sub(' \((.*?)\)', '', vernacularName)  # without anything in parentheses
+    out = scientific_name if vernacularName == '' else re.sub(' \((.*?)\)', '',
+                                                              vernacularName)  # without anything in parentheses
 
-    return (out if lang == 'en' else Translator().translate(out, dest=lang.lower()).text)
+    return out if lang == 'en' else Translator().translate(out, dest=lang.lower()).text
