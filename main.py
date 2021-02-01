@@ -4,6 +4,7 @@ from engine.read_data import *
 from engine.model import *
 import os
 from PIL import Image
+st.set_page_config(layout='wide')
 
 lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'])
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
@@ -41,17 +42,16 @@ if os.path.exists(audiopath):
     st.sidebar.audio(audiopath)
     samples_db, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
-    col1, col2 = st.beta_columns(2)  ## names and translation
-    col1.write(bird_scientific_name)
-    col2.write(get_vernacular(bird_scientific_name, lang=lang))
+    col1, col2, col3 = st.beta_columns([1,1,2])  ## names and translation
+    col1.write("[{}](http://en.wikipedia.org/wiki/{})".format(bird_scientific_name, re.sub(' ', '_', bird_scientific_name)))
+    col2.write("[{}](http://{}.wikipedia.org/wiki/{})".format(get_vernacular(bird_scientific_name, lang=lang), lang, re.sub(' ', '_', bird_scientific_name)))
 
-    st.image(bird_url, use_column_width=True)
+    st.image(bird_url, width=600)
     st.write(samples_db.prediction)
     # col1 = st.beta_columns(1)
     # col1.header('Spectrogram')
     st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
     print('spectr', type(spectrogram), spectrogram.shape, sep='\n\n')
-
 
     # map
     map_pydeck = form_pydeck(audiopath)
