@@ -43,8 +43,8 @@ if os.path.exists(audiopath):
     samples_db, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
     col1, col2, col3 = st.beta_columns([1,1,2])  ## names and translation
-    col1.write("[{}](http://en.wikipedia.org/wiki/{})".format(bird_scientific_name, re.sub(' ', '_', bird_scientific_name)))
-    col2.write("[{}](http://{}.wikipedia.org/wiki/{})".format(get_vernacular(bird_scientific_name, lang=lang), lang, re.sub(' ', '_', bird_scientific_name)))
+    col1.write(f"[{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+    col2.write(f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
 
     st.image(bird_url, width=600)
     st.write(samples_db.prediction)
