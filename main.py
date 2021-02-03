@@ -4,6 +4,7 @@ from engine.read_data import *
 from engine.model import *
 import os
 from PIL import Image
+import pickle
 
 lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'])
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
@@ -35,6 +36,8 @@ else:
 
 uploaded = st.sidebar.file_uploader('Upload mp3')  # supposed to be an mp3 uploaded file
 if uploaded:
+    print('upl', dir(uploaded), sep='\n')
+
     audiopath = uploaded
 
 if os.path.exists(audiopath):
@@ -50,9 +53,19 @@ if os.path.exists(audiopath):
     # col1 = st.beta_columns(1)
     # col1.header('Spectrogram')
     st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
-    print('spectr', type(spectrogram), spectrogram.shape, sep='\n\n')
+
+    # a = [x[0] for x in samples_db.prediction.values]
+    # new_df = pd.DataFrame([x[0] for x in samples_db.prediction.values])
+    # print('spect', new_df.idxmax(1))
+    print('pred', samples_db.pred_bird, bird_scientific_name, sep='\n')
 
 
     # map
     map_pydeck = form_pydeck(audiopath)
     st.pydeck_chart(map_pydeck)
+
+
+def prediction_check(samples):
+    new_df = pd.DataFrame([x[0] for x in samples.prediction.values])
+
+    return
