@@ -1,9 +1,8 @@
-import streamlit as st
-import json
 from engine.read_data import *
 from engine.model import *
 import os
 from PIL import Image
+
 st.set_page_config(layout='wide')
 
 lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'])
@@ -40,19 +39,26 @@ if uploaded:
 
 if os.path.exists(audiopath):
     st.sidebar.audio(audiopath)
-    samples_db, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
+    table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
     col1, col2, col3 = st.beta_columns([1,1,2])  ## names and translation
     col1.write("[{}](http://en.wikipedia.org/wiki/{})".format(bird_scientific_name, re.sub(' ', '_', bird_scientific_name)))
     col2.write("[{}](http://{}.wikipedia.org/wiki/{})".format(get_vernacular(bird_scientific_name, lang=lang), lang, re.sub(' ', '_', bird_scientific_name)))
 
-    st.image(bird_url, width=600)
-    st.write(samples_db.prediction)
-    # col1 = st.beta_columns(1)
-    # col1.header('Spectrogram')
-    st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
-    print('spectr', type(spectrogram), spectrogram.shape, sep='\n\n')
+    col1.image(bird_url, width=400)
+    col3.subheader('Top 5 guesses:')
+    col3.write(table_of_predictions[['en','probability']].\
+                   nlargest(5, columns='probability').\
+                   style.format({"probability": '{:,.2%}'.format})
+               )
 
-    # map
-    map_pydeck = form_pydeck(audiopath)
-    st.pydeck_chart(map_pydeck)
+    with st.beta_expander('Spectrogram', False):
+        st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
+        print('spectr', type(spectrogram), spectrogram.shape, sep='\n\n')
+
+    with st.beta_expander('map', False):
+        try:
+            map_pydeck = form_pydeck(audiopath) ## requires fixing (test_csv updated)
+            st.pydeck_chart(map_pydeck)
+        except:
+            pass
