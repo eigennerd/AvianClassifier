@@ -1,10 +1,10 @@
-import streamlit as st
-import json
 from engine.read_data import *
 from engine.model import *
 import os
 from PIL import Image
 import pickle
+
+st.set_page_config(layout='wide')
 
 lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'])
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
@@ -42,14 +42,14 @@ if uploaded:
 
 if os.path.exists(audiopath):
     st.sidebar.audio(audiopath)
-    samples_db, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
+    table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
     col1, col2 = st.beta_columns(2)  ## names and translation
     col1.write(bird_scientific_name)
     col2.write(get_vernacular(bird_scientific_name, lang=lang))
 
     st.image(bird_url, use_column_width=True)
-    st.write(samples_db.prediction)
+    st.write(table_of_predictions.prediction)
     # col1 = st.beta_columns(1)
     # col1.header('Spectrogram')
     st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
@@ -57,15 +57,31 @@ if os.path.exists(audiopath):
     # a = [x[0] for x in samples_db.prediction.values]
     # new_df = pd.DataFrame([x[0] for x in samples_db.prediction.values])
     # print('spect', new_df.idxmax(1))
-    print('pred', samples_db.pred_bird, bird_scientific_name, sep='\n')
+    print('pred', table_of_predictions.pred_bird, bird_scientific_name, sep='\n')
 
+    st.image(bird_url, width=600)
+    st.write(table_of_predictions.prediction)
+    # col1 = st.beta_columns(1)
+    # col1.header('Spectrogram')
+    st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
+    print('spectr', type(spectrogram), spectrogram.shape, sep='\n\n')
+    col1.image(bird_url, width=400)
+    col3.subheader('Top 5 guesses:')
+    col3.write(table_of_predictions[['en', 'probability']].\
+                   nlargest(5, columns='probability').\
+                   style.format({"probability": '{:,.2%}'.format})
+               )
+
+    with st.beta_expander('Spectrogram', False):
+        st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
+        print('spectr', type(spectrogram), spectrogram.shape, sep='\n\n')
 
     # map
     map_pydeck = form_pydeck(audiopath)
     st.pydeck_chart(map_pydeck)
-
-
-def prediction_check(samples):
-    new_df = pd.DataFrame([x[0] for x in samples.prediction.values])
-
-    return
+    with st.beta_expander('map', False):
+        try:
+            map_pydeck = form_pydeck(audiopath) ## requires fixing (test_csv updated)
+            st.pydeck_chart(map_pydeck)
+        except:
+            pass
