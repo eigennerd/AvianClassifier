@@ -107,3 +107,14 @@ def get_vernacular(scientific_name='troglodytes troglodytes', lang='en'):
                                                               vernacularName)  # without anything in parentheses
 
     return out if lang == 'en' else Translator().translate(out, dest=lang.lower()).text
+
+
+def handle_uploaded(file):
+    name = 'data/tmp/upl.mp3'
+    if not os.path.exists('data/tmp'):
+        os.mkdir('data/tmp')
+
+    with open(name, 'wb') as f:
+        f.write(file.read())
+
+    return name
