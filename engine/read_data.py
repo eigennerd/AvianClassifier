@@ -116,5 +116,24 @@ def handle_uploaded(file):
 
     with open(name, 'wb') as f:
         f.write(file.read())
-
     return name
+
+
+def compare(bird_name, audio):
+    true_data = pd.read_csv(meta, index_col=False)
+
+    record_number = audio.split('.')[0][-2:]
+    test_row = true_data[true_data['ind'] == int(record_number)]
+    true_name = test_row['ebird_code'].values[0]
+
+    predicted_name = '{}{}'.format(bird_name.split(' ')[0][:4].lower(),
+                                   bird_name.split(' ')[1][:4].lower())
+
+    if true_name == predicted_name:
+        return True
+    return False
+
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)

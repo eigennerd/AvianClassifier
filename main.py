@@ -4,9 +4,11 @@ import os
 from PIL import Image
 
 st.set_page_config(layout='wide')
+local_css("engine/style.css")
 
 lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'])
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+
 
 # config.json has page content
 with open('engine/config.json') as conf_file:  # load JSON config file
@@ -41,6 +43,12 @@ if os.path.exists(audiopath):
     st.sidebar.audio(audiopath)
     table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
+    prediction_correct = compare(bird_scientific_name, audiopath)
+    if prediction_correct:
+        pred_msg = '<div> <span class="highlight blue">Predictions is correct</span></div>'
+    else:
+        pred_msg = '<div> <span class="highlight red">Prediction is wrong</span></div>'
+
     col1, col2, col3 = st.beta_columns([1, 1, 2])  # names and translation
     col1.write(f"[{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
     col2.write(
@@ -52,6 +60,7 @@ if os.path.exists(audiopath):
                nlargest(5, columns='probability'). \
                style.format({"probability": '{:,.2%}'.format})
                )
+    col3.markdown(pred_msg, unsafe_allow_html=True)
 
     with st.beta_expander('Spectrogram', False):
         st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
@@ -62,3 +71,6 @@ if os.path.exists(audiopath):
             st.pydeck_chart(map_pydeck)
         except:
             pass
+
+
+

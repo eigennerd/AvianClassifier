@@ -111,7 +111,7 @@ def read_mp3(uploaded_mp3):
             class_mode='categorical'
         )
 
-        preds = model.predict(test_generator, steps = len(samples_from_file)) # feeding test generator to model
+        preds = model.predict(test_generator, steps=len(samples_from_file))  # feeding test generator to model
         list_of_preds = []
         table_of_probabilities = pd.DataFrame({"ebird_code": classes_to_predict,
                                              "probability": preds.mean(axis=0)}).merge(
