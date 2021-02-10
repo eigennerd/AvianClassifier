@@ -13,8 +13,8 @@ st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', uns
 if os.path.exists('model'):
     pass
 else:
-    st.progress('Please allow a few moments while we are fetching some data...')
-    download_model()
+    with st.spinner('Please allow a few moments while we are fetching some data...')
+        download_model()
 
 
 # config.json has page content
