@@ -21,10 +21,11 @@ birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 classes_to_predict = sorted(birds_df.ebird_code.unique())  # TODO: add 'nocall' later
 
 
-def download_model(bucket_name='acoustic-scarab-bucket', prefix='../model/'):
+def download_model(bucket_name='acoustic-scarab-bucket', prefix='model/'):
     '''
         downloads model from the public bucket
     '''
+
     storage_client = storage.Client.create_anonymous_client()
 
     bucket = storage_client.bucket(bucket_name)
@@ -48,20 +49,18 @@ def load_model_to_st(model_path='model'):
 
     return model
 
-
 ## check for model
 if os.path.exists('model'):
     pass
 else:
-    with st.spinner('Few moments while we are fetching some data...'):
+    with st.spinner('Please allow a few moments while we are fetching some data for initial run...'):
         download_model()
+    ## load when done
 
-## load when done
 with st.spinner('Loading model...'):
-    model = load_model_to_st()
+    model  = load_model_to_st()
 
-
-def read_mp3(uploaded_mp3, model=model):
+def read_mp3(uploaded_mp3):
     '''
 
     :param uploaded_mp3:
