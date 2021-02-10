@@ -1,4 +1,6 @@
 import streamlit as st
+st.set_page_config(layout='wide')
+
 from engine.read_data import *
 from engine.model import *
 import os

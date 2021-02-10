@@ -14,7 +14,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pathlib import Path
 from google.cloud import storage
 ## setting page width here as this is the file where first streamlit commands are exec'td
-st.set_page_config(layout='wide')
+
 
 birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 
@@ -25,18 +25,18 @@ def download_model(bucket_name='acoustic-scarab-bucket', prefix='model/'):
     '''
         downloads model from the public bucket
     '''
+    with st.spinner('Please allow a few moments while we are downloading data...'):
+        storage_client = storage.Client.create_anonymous_client()
 
-    storage_client = storage.Client.create_anonymous_client()
-
-    bucket = storage_client.bucket(bucket_name)
-    blobs = bucket.list_blobs(prefix=prefix)  # Get list of files
-    for blob in blobs:
-        if blob.name.endswith("/"):
-            continue
-        file_split = blob.name.split("/")
-        directory = "/".join(file_split[0:-1])
-        Path(directory).mkdir(parents=True, exist_ok=True)
-        blob.download_to_filename(blob.name)
+        bucket = storage_client.bucket(bucket_name)
+        blobs = bucket.list_blobs(prefix=prefix)  # Get list of files
+        for blob in blobs:
+            if blob.name.endswith("/"):
+                continue
+            file_split = blob.name.split("/")
+            directory = "/".join(file_split[0:-1])
+            Path(directory).mkdir(parents=True, exist_ok=True)
+            blob.download_to_filename(blob.name)
 
 ## check for model
 if os.path.exists('model'):
