@@ -14,54 +14,51 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pathlib import Path
 from google.cloud import storage
 ## setting page width here as this is the file where first streamlit commands are exec'td
-st.set_page_config(layout='wide')
+
 
 birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 
 classes_to_predict = sorted(birds_df.ebird_code.unique())  # TODO: add 'nocall' later
 
 
-def download_model(bucket_name='acoustic-scarab-bucket', prefix='../model/'):
+def download_model(bucket_name='acoustic-scarab-bucket', prefix='model/'):
     '''
         downloads model from the public bucket
     '''
-    storage_client = storage.Client.create_anonymous_client()
+    with st.spinner('Please allow a few moments while we are downloading data...'):
+        storage_client = storage.Client.create_anonymous_client()
 
-    bucket = storage_client.bucket(bucket_name)
-    blobs = bucket.list_blobs(prefix=prefix)  # Get list of files
-    for blob in blobs:
-        if blob.name.endswith("/"):
-            continue
-        file_split = blob.name.split("/")
-        directory = "/".join(file_split[0:-1])
-        Path(directory).mkdir(parents=True, exist_ok=True)
-        blob.download_to_filename(blob.name)
+        bucket = storage_client.bucket(bucket_name)
+        blobs = bucket.list_blobs(prefix=prefix)  # Get list of files
+        for blob in blobs:
+            if blob.name.endswith("/"):
+                continue
+            file_split = blob.name.split("/")
+            directory = "/".join(file_split[0:-1])
+            Path(directory).mkdir(parents=True, exist_ok=True)
+            blob.download_to_filename(blob.name)
+
+## check for model
+if os.path.exists('model'):
+    pass
+else:
+    with st.spinner('Please allow a few moments while we are fetching some data for initial run...'):
+        download_model()
 
 @st.cache(allow_output_mutation=True)
 def load_model_to_st(model_path='model'):
     '''
         loads complete model architecture with weights
     '''
-    model = tf.keras.models.load_model(model_path)
+    with st.spinner('Loading model...'):
+        model = tf.keras.models.load_model(model_path)
     model.make_predict_function()
     model.summary()
 
     return model
 
 
-## check for model
-if os.path.exists('model'):
-    pass
-else:
-    with st.spinner('Few moments while we are fetching some data...'):
-        download_model()
-
-## load when done
-with st.spinner('Loading model...'):
-    model = load_model_to_st()
-
-
-def read_mp3(uploaded_mp3, model=model):
+def read_mp3(uploaded_mp3, model = load_model_to_st()):
     '''
 
     :param uploaded_mp3:

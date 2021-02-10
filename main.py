@@ -1,4 +1,6 @@
 import streamlit as st
+st.set_page_config(layout='wide')
+
 from engine.read_data import *
 from engine.model import *
 import os
@@ -52,6 +54,7 @@ if uploaded:
 ## MAINBAR INIT BLOCK
 #####
 if os.path.exists(audiopath):
+    header_text.empty()
     st.sidebar.audio(audiopath)
     table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
