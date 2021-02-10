@@ -8,9 +8,7 @@ from PIL import Image
 import streamlit as st
 from uuid import uuid4
 from librosa.feature import melspectrogram
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout, Activation, BatchNormalization, GlobalAveragePooling2D
-from tensorflow.keras.applications import ResNet50
+import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
@@ -18,29 +16,14 @@ birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 classes_to_predict = sorted(birds_df.ebird_code.unique())  # TODO: add 'nocall' later
 
 
-def load_model(classes_to_predict=classes_to_predict, weights_path='model/tf24_cpu_RN50_521_20sp_ns_1000s_newDataGen.h5'):
-    input_shape = (216, 216, 3)
-    resnet_layers = ResNet50(weights=None, include_top=False, input_shape=input_shape)
+def load_model(model_path='model'):
+    ok1 = st.empty()
 
-    model = Sequential()
-    model.add(resnet_layers)
-    model.add(GlobalAveragePooling2D())
+    with ok1.spinner('Loading the model...')
+        model = tf.saved_model.load(model_path)
 
-    model.add(Dense(512, use_bias=False))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Dense(256, use_bias=False))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Dense(128, use_bias=False))
-    model.add(BatchNormalization())
-    model.add(Activation('relu'))
-
-    model.add(Dense(len(classes_to_predict), activation="softmax"))
-
-    model.load_weights(weights_path)
+    ok1.success('Model loaded!')
+    ok1.empty()
 
     return model
 

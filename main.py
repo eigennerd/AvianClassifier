@@ -9,6 +9,13 @@ local_css("engine/style.css")
 lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'])
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
+## check for model
+if os.path.exists('model'):
+    pass
+else:
+    st.progress('Please allow a few moments while we are fetching some data...')
+    download_model()
+
 
 # config.json has page content
 with open('engine/config.json') as conf_file:  # load JSON config file
