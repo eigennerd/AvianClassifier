@@ -2,13 +2,13 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 import os
-import Path
 import pydeck as pdk
 import json
 import requests
 import re
 from googletrans import Translator
 from settings import *
+
 
 AUDIO_EXTENSIONS = ["wav", "mp3"]
 
@@ -137,17 +137,3 @@ def compare(bird_name, audio):
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
-
-
-def download_model(bucket_name='acoustic-scarab-bucket', prefix='model/'):
-    storage_client = storage.Client.create_anonymous_client()
-
-    bucket = storage_client.bucket(bucket_name)
-    blobs = bucket.list_blobs(prefix=prefix)  # Get list of files
-    for blob in blobs:
-        if blob.name.endswith("/"):
-            continue
-        file_split = blob.name.split("/")
-        directory = "/".join(file_split[0:-1])
-        Path(directory).mkdir(parents=True, exist_ok=True)
-        blob.download_to_filename(blob.name)

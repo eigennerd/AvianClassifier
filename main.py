@@ -1,21 +1,17 @@
+import streamlit as st
 from engine.read_data import *
 from engine.model import *
 import os
 from PIL import Image
 
-st.set_page_config(layout='wide')
+####
+## CONFIG BLOCK
+####
+
 local_css("engine/style.css")
 
-lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'])
+lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'], key='1')
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-
-## check for model
-if os.path.exists('model'):
-    pass
-else:
-    with st.spinner('Please allow a few moments while we are fetching some data...')
-        download_model()
-
 
 # config.json has page content
 with open('engine/config.json') as conf_file:  # load JSON config file
@@ -36,16 +32,25 @@ test_dir = os.path.join(  # todo: change this
 
 audiofiles = get_audio_files_in_dir(test_dir)
 
+####
+## SIDEBAR DEMO FILES BLOCK
+####
 if len(audiofiles) == 0:
     st.write("Put some audio files in your test directory (%s) to activate this player." % test_dir)
 else:
     filename = st.sidebar.selectbox("Select mp3 from test directory (%s)" % test_dir, audiofiles, 0)
     audiopath = os.path.join(test_dir, filename)
 
+#####
+## SIDEBAR UPLOAD BLOCK
+#####
 uploaded = st.sidebar.file_uploader('Upload mp3')  # supposed to be an mp3 uploaded file
 if uploaded:
     audiopath = handle_uploaded(uploaded)
 
+#####
+## MAINBAR INIT BLOCK
+#####
 if os.path.exists(audiopath):
     st.sidebar.audio(audiopath)
     table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
