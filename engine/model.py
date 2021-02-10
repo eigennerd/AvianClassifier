@@ -129,7 +129,7 @@ def read_mp3(uploaded_mp3, model=model):
         list_of_preds = []
         table_of_probabilities = pd.DataFrame({"ebird_code": classes_to_predict,
                                              "probability": preds.mean(axis=0)}).merge(
-                                             birds_df[['ebird_code', 'en']], on='ebird_code'
+                                             birds_df[['ebird_code', 'en', 'gen', 'sp']], on='ebird_code'
                                             )
 
         for i in range(0, len(samples_from_file)):

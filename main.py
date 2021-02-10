@@ -55,14 +55,24 @@ if os.path.exists(audiopath):
     st.sidebar.audio(audiopath)
     table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
-    prediction_correct = compare(bird_scientific_name, audiopath)
-    if prediction_correct:
-        pred_msg = '<div> <span class="highlight blue">Predictions is correct</span></div>'
+    if 'test_audio' in audiopath:
+        for idx, row in table_of_predictions.nlargest(5, columns='probability').reset_index().iterrows():
+            if compare(f"{row.gen} {row.sp}", audiopath):
+                idx=idx+1
+                predicted_name = f"{row.gen} {row.sp}"
+                break
+            else:
+                idx=0
+
+        if idx>0:
+            pred_msg = f'<div> <span class="highlight blue">Correct name: {get_vernacular(predicted_name)} was guessed as top-{idx} </span></div>'
+        else:
+            pred_msg = f"<div> <span class='highlight red'>AI did not guess the birb: {birds_df[birds_df['ind'] == int(audiopath.split('.')[0][-2:])]['en'].values[0]}</span></div>"
     else:
-        pred_msg = '<div> <span class="highlight red">Prediction is wrong</span></div>'
+        pred_msg = '<div> <span class="highlight blue">AI does not know the Ground Truth of uploaded files </span></div>'
 
     col1, col2, col3 = st.beta_columns([1, 1, 2])  # names and translation
-    col1.write(f"[{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+    col1.write(f"Top guess: [{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
     col2.write(
         f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
 
