@@ -38,29 +38,27 @@ def download_model(bucket_name='acoustic-scarab-bucket', prefix='model/'):
         Path(directory).mkdir(parents=True, exist_ok=True)
         blob.download_to_filename(blob.name)
 
-@st.cache(allow_output_mutation=True)
-def load_model_to_st(model_path='model'):
-    '''
-        loads complete model architecture with weights
-    '''
-    model = tf.keras.models.load_model(model_path)
-    model.make_predict_function()
-    model.summary()
-
-    return model
-
 ## check for model
 if os.path.exists('model'):
     pass
 else:
     with st.spinner('Please allow a few moments while we are fetching some data for initial run...'):
         download_model()
-    ## load when done
 
-with st.spinner('Loading model...'):
-    model  = load_model_to_st()
+@st.cache(allow_output_mutation=True)
+def load_model_to_st(model_path='model'):
+    '''
+        loads complete model architecture with weights
+    '''
+    with st.spinner('Loading model...'):
+        model = tf.keras.models.load_model(model_path)
+    model.make_predict_function()
+    model.summary()
 
-def read_mp3(uploaded_mp3):
+    return model
+
+
+def read_mp3(uploaded_mp3, model = load_model_to_st()):
     '''
 
     :param uploaded_mp3:
