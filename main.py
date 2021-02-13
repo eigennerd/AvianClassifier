@@ -40,7 +40,7 @@ audiofiles = get_audio_files_in_dir(test_dir)
 if len(audiofiles) == 0:
     st.write("Put some audio files in your test directory (%s) to activate this player." % test_dir)
 else:
-    filename = st.sidebar.selectbox("Select mp3 from test directory (%s)" % test_dir, audiofiles, 0)
+    filename = st.sidebar.selectbox("Select mp3 from test directory", audiofiles, 0)
     audiopath = os.path.join(test_dir, filename)
 
 #####
