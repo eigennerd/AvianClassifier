@@ -22,35 +22,42 @@ birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 classes_to_predict = sorted(birds_df.ebird_code.unique())  # TODO: add 'nocall' later
 
 
-def download_model(bucket_name='acoustic-scarab-bucket', prefix='model/'):
+def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model/'):
     '''
-        downloads model from the public bucket
+        downloads model and other data from the public bucket
     '''
-    with st.spinner('Please allow a few moments while we are downloading data...'):
-        storage_client = storage.Client.create_anonymous_client()
+    storage_client = storage.Client.create_anonymous_client()
 
-        bucket = storage_client.bucket(bucket_name)
-        blobs = bucket.list_blobs(prefix=prefix)  # Get list of files
-        for blob in blobs:
-            if blob.name.endswith("/"):
-                continue
-            file_split = blob.name.split("/")
-            directory = "/".join(file_split[0:-1])
-            Path(directory).mkdir(parents=True, exist_ok=True)
-            blob.download_to_filename(blob.name)
+    bucket = storage_client.bucket(bucket_name)
+    blobs = bucket.list_blobs(prefix=prefix)  # Get list of files
+    for blob in blobs:
+        if blob.name.endswith("/"):
+            continue
+        file_split = blob.name.split("/")
+        directory = "/".join(file_split[0:-1])
+        Path(directory).mkdir(parents=True, exist_ok=True)
+        blob.download_to_filename(blob.name)
 
-## check for model
-if os.path.exists('model'):
-    pass
-else:
-    with st.spinner('Please allow a few moments while we are fetching some data for initial run...'):
-        download_model()
+def check_download_data():
+    ## check for model
+    if os.path.exists('model'):
+        pass
+    else:
+        with st.spinner('We are fetching some data for initial run, please allow a few moments...'):
+            download_from_bucket()
+    ## check for test_audio
+    if os.path.exists('test_audio'):
+        pass
+    else:
+        with st.spinner('Almost there... '):
+            download_from_bucket(prefix='test_audio/')
 
 @st.cache(allow_output_mutation=True)
 def load_model_to_st(model_path='model'):
     '''
         loads complete model architecture with weights
     '''
+    check_download_data()
     with st.spinner('Loading model...'):
         model = tf.keras.models.load_model(model_path)
     model.make_predict_function()
