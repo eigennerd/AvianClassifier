@@ -99,7 +99,7 @@ def get_vernacular(scientific_name='troglodytes troglodytes', lang='en'):
     res2 = requests.get('https://api.gbif.org/v1/species/{}/vernacularNames'.format(key))
     vernacularName = ''
     for dict_element in json.loads(res2.text)['results']:
-        if dict_element['language'] == 'eng':  # get the last english (and perhaps the most correct) vernacular
+        if dict_element['language'] == 'eng' and '/' not in dict_element['vernacularName']:  # get the last english (and perhaps the most correct) vernacular (without forward slash)
             vernacularName = dict_element['vernacularName']
 
     out = scientific_name if vernacularName == '' else re.sub(' \((.*?)\)', '',
