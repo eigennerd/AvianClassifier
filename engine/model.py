@@ -9,6 +9,7 @@ import streamlit as st
 from uuid import uuid4
 from librosa.feature import melspectrogram
 import tensorflow as tf
+from tensorflow.keras.applications.resnet50 import preprocess_input
 from tensorflow.compat.v1.keras import backend as K
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pathlib import Path
@@ -110,7 +111,7 @@ def read_mp3(uploaded_mp3, model = load_model_to_st()):
 
         #st.write(samples_from_file)
 
-        datagen = ImageDataGenerator(rescale=1./255)
+        datagen = ImageDataGenerator(rescale=1./255, preprocessing_function=preprocess_input)
 
         test_generator = datagen.flow_from_dataframe( # creating test generator
             dataframe=samples_from_file,
