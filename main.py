@@ -12,7 +12,7 @@ from PIL import Image
 
 local_css("engine/style.css")
 
-lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'], key='1')
+lang = st.sidebar.radio(label='Language options:', options=['en', 'fr', 'ru', 'pl'], key='1')
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 # config.json has page content
@@ -67,8 +67,8 @@ if os.path.exists(audiopath):
             else:
                 idx=0
 
-        if idx>0:
-            pred_msg = f'<div> <span class="highlight blue">Correct name: {get_vernacular(predicted_name)} was guessed as top-{idx} </span></div>'
+        if idx==1:
+            pred_msg = f'<div> <span class="highlight blue">AI guessed - {get_vernacular(predicted_name)} ! </span></div>'
         else:
             pred_msg = f"<div> <span class='highlight red'>AI did not guess the birb: {birds_df[birds_df['ind'] == int(audiopath.split('.')[0][-2:])]['en'].values[0]}</span></div>"
     else:
