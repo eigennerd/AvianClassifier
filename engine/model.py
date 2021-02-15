@@ -4,6 +4,7 @@ import librosa
 import sklearn
 import shutil
 import os
+from scipy.special import logit
 from PIL import Image
 import streamlit as st
 from uuid import uuid4
@@ -131,16 +132,18 @@ def read_mp3(uploaded_mp3, model = load_model_to_st()):
         )
 
         preds = model.predict(test_generator, steps=len(samples_from_file))  # feeding test generator to model
+        logits = logit(preds)
         list_of_preds = []
         table_of_probabilities = pd.DataFrame({"ebird_code": classes_to_predict,
-                                             "probability": preds.mean(axis=0)}).merge(
+                                             "certainty": (1/(1+np.exp(-logits.mean(axis=0)))),
+                                              "logit": logits.mean(axis=0)}).merge(
                                              birds_df[['ebird_code', 'en', 'gen', 'sp']], on='ebird_code'
                                             )
 
         for i in range(0, len(samples_from_file)):
             list_of_preds.append({"bird":f"{classes_to_predict[np.argmax(preds[i])]}"})
 
-        predicted_bird = table_of_probabilities.nlargest(1, columns='probability').ebird_code.values[0]
+        predicted_bird = table_of_probabilities.nlargest(1, columns='certainty').ebird_code.values[0]
 
         seconds_30 = 2160
 

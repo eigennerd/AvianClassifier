@@ -59,7 +59,7 @@ if os.path.exists(audiopath):
     table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
 
     if 'test_audio' in audiopath:
-        for idx, row in table_of_predictions.nlargest(5, columns='probability').reset_index().iterrows():
+        for idx, row in table_of_predictions.nlargest(5, columns='certainty').reset_index().iterrows():
             if compare(f"{row.gen} {row.sp}", audiopath):
                 idx=idx+1
                 predicted_name = f"{row.gen} {row.sp}"
@@ -81,9 +81,9 @@ if os.path.exists(audiopath):
 
     col1.image(bird_url, width=400)
     col3.subheader('Top 5 guesses:')
-    col3.write(table_of_predictions[['en', 'probability']]. \
-               nlargest(5, columns='probability'). \
-               style.format({"probability": '{:,.2%}'.format})
+    col3.write(table_of_predictions[['en', 'certainty']]. \
+               nlargest(5, columns='certainty'). \
+               style.format({"certainty": '{:,.2%}'.format})
                )
     col3.markdown(pred_msg, unsafe_allow_html=True)
 
