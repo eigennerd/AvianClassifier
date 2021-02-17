@@ -105,7 +105,7 @@ def get_vernacular(scientific_name='troglodytes troglodytes', lang='en'):
     out = scientific_name if vernacularName == '' else re.sub(' \((.*?)\)', '',
                                                               vernacularName)  # without anything in parentheses
 
-    return out if lang == 'en' else Translator().translate(out, dest=lang.lower()).text
+    return out if lang == 'en' else Translator().translate(out, dest='en' if lang == 'ua' else lang.lower()).text
 
 
 def handle_uploaded(file):

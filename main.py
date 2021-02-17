@@ -1,6 +1,6 @@
 import streamlit as st
 st.set_page_config(layout='wide')
-
+from engine.config import *
 from engine.read_data import *
 from engine.model import *
 import os
@@ -12,13 +12,10 @@ from PIL import Image
 
 local_css("engine/style.css")
 
-lang = st.sidebar.radio(label='Language options:', options=['en', 'fr', 'ru', 'pl'], key='1')
+lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'], key='1')
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
-# config.json has page content
-with open('engine/config.json') as conf_file:  # load JSON config file
-    configGlobal = json.load(conf_file)
-    texts = configGlobal[lang]
+texts = config_json()[lang]
 # declare placeholders
 header = st.empty()  # placeholder for 1st header
 header_text = st.empty()  # placeholder for 1st textbox
@@ -40,13 +37,13 @@ audiofiles = get_audio_files_in_dir(test_dir)
 if len(audiofiles) == 0:
     st.write("Put some audio files in your test directory (%s) to activate this player." % test_dir)
 else:
-    filename = st.sidebar.selectbox("Select mp3 from test directory", audiofiles, 0)
+    filename = st.sidebar.selectbox(texts['select_mp3'], audiofiles, 0)
     audiopath = os.path.join(test_dir, filename)
 
 #####
 ## SIDEBAR UPLOAD BLOCK
 #####
-uploaded = st.sidebar.file_uploader('Upload mp3')  # supposed to be an mp3 uploaded file
+uploaded = st.sidebar.file_uploader(texts['upload_mp3'])  # supposed to be an mp3 uploaded file
 if uploaded:
     audiopath = handle_uploaded(uploaded)
 
@@ -62,7 +59,7 @@ if os.path.exists(audiopath):
     if 'test_audio' in audiopath:
         for idx, row in table_of_predictions.nlargest(5, columns='certainty').reset_index().iterrows():
             if compare(f"{row.gen} {row.sp}", audiopath):
-                idx=idx+1
+                idx+=1
                 predicted_name = f"{row.gen} {row.sp}"
                 break
             else:
@@ -76,7 +73,7 @@ if os.path.exists(audiopath):
             pred_msg = f"<div> <span class='highlight blue'>{texts['uploaded_msg']}</span></div>"
 
     col1, col2, col3 = st.beta_columns([1, 1, 2])  # names and translation
-    col1.write(f"Top guess: [{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+    col1.write(f"{texts['top_guess']} [{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
     col2.write(
           f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
 
