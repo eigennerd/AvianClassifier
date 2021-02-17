@@ -18,7 +18,7 @@ st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', uns
 # config.json has page content
 with open('engine/config.json') as conf_file:  # load JSON config file
     configGlobal = json.load(conf_file)
-    texts = configGlobal['demo']
+    texts = configGlobal[lang]
 # declare placeholders
 header = st.empty()  # placeholder for 1st header
 header_text = st.empty()  # placeholder for 1st textbox
@@ -27,7 +27,7 @@ show_bird_2 = st.empty()  # this will show 2nd prediction picture (bird_2)
 show_bird_3 = st.empty()  # this will show 3rd prediction picture (bird_3)
 # declare headers
 header.header(texts['header_1'])
-header_text.write(texts['intro_1'])
+header_text.markdown(texts['intro_1'])
 test_dir = os.path.join(  # todo: change this
     os.path.dirname(os.path.realpath(__file__)),  # where am i?
     'test_audio')
@@ -57,6 +57,7 @@ if os.path.exists(audiopath):
     header_text.empty()
     st.sidebar.audio(audiopath)
     table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
+    idx=0
 
     if 'test_audio' in audiopath:
         for idx, row in table_of_predictions.nlargest(5, columns='certainty').reset_index().iterrows():
@@ -68,24 +69,24 @@ if os.path.exists(audiopath):
                 idx=0
 
         if idx==1:
-            pred_msg = f'<div> <span class="highlight blue">AI guessed - {get_vernacular(predicted_name)} ! </span></div>'
+            pred_msg = f"<div> <span class='highlight blue'>{texts['success_msg']} {get_vernacular(predicted_name, lang=lang)} ! </span></div>"
         else:
-            pred_msg = f"<div> <span class='highlight red'>AI did not guess the birb: {birds_df[birds_df['ind'] == int(audiopath.split('.')[0][-2:])]['en'].values[0]}</span></div>"
+            pred_msg = f"<div> <span class='highlight red'>{texts['not_guessed_msg']} {birds_df[birds_df['ind'] == int(audiopath.split('.')[0][-2:])]['en'].values[0]}</span></div>"
     else:
-        pred_msg = '<div> <span class="highlight blue">AI does not know the Ground Truth of uploaded files </span></div>'
+            pred_msg = f"<div> <span class='highlight blue'>{texts['uploaded_msg']}</span></div>"
 
     col1, col2, col3 = st.beta_columns([1, 1, 2])  # names and translation
     col1.write(f"Top guess: [{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
     col2.write(
-        f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+          f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
 
     col1.image(bird_url, width=400)
+    col3.markdown(pred_msg, unsafe_allow_html=True)
     col3.subheader('Top 5 guesses:')
     col3.write(table_of_predictions[['en', 'certainty']]. \
                nlargest(5, columns='certainty'). \
                style.format({"certainty": '{:,.2%}'.format})
                )
-    col3.markdown(pred_msg, unsafe_allow_html=True)
 
     with st.beta_expander('Spectrogram', False):
         st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)

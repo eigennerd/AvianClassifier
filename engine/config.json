@@ -5,8 +5,39 @@
     "feature_1": "ID",
     "feature_2": "target"
   },
-  "demo": {
+  "en": {
     "header_1": "Guess Your Birb - Demo",
-    "intro_1": "Select from a set of test mp3's, or use widgets to upload or record your own birb - AI will attempt to guess it!"
+    "intro_1": "Select from a set of test mp3's, or use widgets to upload or record your own birb - AI will attempt to guess it!",
+    "success_msg": "AI guessed - ",
+    "not_guessed_msg": "AI did not guess the birb: ",
+    "uploaded_msg": "Ground Truth of uploaded files unknown"
+  },
+  "ru": {
+    "header_1": "Chto za ptica? - Demo",
+    "intro_1": "Кириллица Kirillica vremenno ne rabotaet :(. Viberi test mp3 ili zagruzi sam",
+    "success_msg": "AI ugadal ! ! !- ",
+    "not_guessed_msg": "AI ne ugadal :(  ",
+    "uploaded_msg": "Ne znaju pravilni otvet"
+  },
+  "de": {
+    "header_1": "Guess Your Birb - Demo",
+    "intro_1": "Select from a set of test mp3's, or use widgets to upload or record your own birb - AI will attempt to guess it!",
+    "success_msg": "AI guessed - ",
+    "not_guessed_msg": "AI did not guess the birb: ",
+    "uploaded_msg": "Ground Truth of uploaded files unknown"
+  },
+ "fr": {
+    "header_1": "Devinez votre oiseau - Demo",
+    "intro_1": "Faites votre choix parmi un ensemble de mp3 de test ou utilisez des widgets pour telecharger ou enregistrer votre propre oiseau - l'IA tentera de le deviner!",
+    "success_msg": "AI guessed - ",
+    "not_guessed_msg": "AI did not guess the birb: ",
+    "uploaded_msg": "Ground Truth of uploaded files unknown"
+  },
+  "pl": {
+    "header_1": "Co to za ptak?",
+    "intro_1": "Wybierz z zestawu testowych plikow MP3 lub uzyj widzetow, aby przeslac wlasnego MP3, lub nagraj wlasnego ptaka - AI sprobuje go odgadnac!",
+    "success_msg": "AI guessed - ",
+    "not_guessed_msg": "AI did not guess the birb: ",
+    "uploaded_msg": "Ground Truth of uploaded files unknown"
   }
 }

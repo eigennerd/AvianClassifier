@@ -84,7 +84,6 @@ def read_mp3(uploaded_mp3, model = load_model_to_st()):
 
         wave_data, _ = librosa.effects.trim(wave_data)
         target_size = (216, 216)
-        song_sample = []
         sample_length = 5 * wave_rate
         samples_from_file = []
 
@@ -95,29 +94,27 @@ def read_mp3(uploaded_mp3, model = load_model_to_st()):
 
         os.mkdir(temp_folder)
 
-        N_mels = 216
-        for idx in range(0, len(wave_data), sample_length): # dumping spectrograms, making an array for output
-            song_sample = wave_data[idx:idx + sample_length]
-            if len(song_sample) >= sample_length:
-                mel = melspectrogram(song_sample, n_mels=N_mels, fmin=1400)
-                db = librosa.power_to_db(mel ** 2 )
-                normalised_db = sklearn.preprocessing.minmax_scale(db)
-                sample_name = str(uuid4())+".tif"
-                db_array = (np.asarray(normalised_db) * 255).astype(np.uint8)
-                spectre_array = np.array([db_array, db_array, db_array]).T
-                spectre_image = Image.fromarray(spectre_array)
-                spectre_image.save(f"{temp_folder}/{sample_name}") ## saving files to temp folder
-                samples_from_file.append({"song_sample":f"{temp_folder}/{sample_name}",
-                                          "y":"nocall"})
-                if idx == 0: #
-                    output_array = spectre_array
-                else:
-                    output_array = np.concatenate((output_array, spectre_array), axis=0)
-
+        with st.spinner('Reading data'):
+            N_mels = 216
+            for idx in range(0, len(wave_data), sample_length): # dumping spectrograms, making an array for output
+                song_sample = wave_data[idx:idx + sample_length]
+                if len(song_sample) >= sample_length:
+                    mel = melspectrogram(song_sample, n_mels=N_mels, fmin=1400)
+                    db = librosa.power_to_db(mel ** 2)
+                    normalised_db = sklearn.preprocessing.minmax_scale(db)
+                    sample_name = str(uuid4())+".tif"
+                    db_array = (np.asarray(normalised_db) * 255).astype(np.uint8)
+                    spectre_array = np.array([db_array, db_array, db_array]).T
+                    spectre_image = Image.fromarray(spectre_array)
+                    spectre_image.save(f"{temp_folder}/{sample_name}") ## saving files to temp folder
+                    samples_from_file.append({"song_sample":f"{temp_folder}/{sample_name}",
+                                                        "y":"nocall"})
+                    if idx == 0: #
+                        output_array = spectre_array
+                    else:
+                        output_array = np.concatenate((output_array, spectre_array), axis=0)
 
         samples_from_file = pd.DataFrame(samples_from_file)
-
-        #st.write(samples_from_file)
 
         datagen = ImageDataGenerator(rescale=1./255, preprocessing_function=preprocess_input)
 
@@ -130,20 +127,20 @@ def read_mp3(uploaded_mp3, model = load_model_to_st()):
             batch_size=1,
             class_mode='categorical'
         )
+        with st.spinner('Running predictions...'):
+            preds = model.predict(test_generator, steps=len(samples_from_file))  # feeding test generator to model
+            logits = logit(preds)
+            list_of_preds = []
+            table_of_probabilities = pd.DataFrame({"ebird_code": classes_to_predict,
+                                                 "certainty": (1/(1+np.exp(-logits.mean(axis=0)))),
+                                                  "logit": logits.mean(axis=0)}).merge(
+                                                 birds_df[['ebird_code', 'en', 'gen', 'sp']], on='ebird_code'
+                                                )
 
-        preds = model.predict(test_generator, steps=len(samples_from_file))  # feeding test generator to model
-        logits = logit(preds)
-        list_of_preds = []
-        table_of_probabilities = pd.DataFrame({"ebird_code": classes_to_predict,
-                                             "certainty": (1/(1+np.exp(-logits.mean(axis=0)))),
-                                              "logit": logits.mean(axis=0)}).merge(
-                                             birds_df[['ebird_code', 'en', 'gen', 'sp']], on='ebird_code'
-                                            )
+            for i in range(0, len(samples_from_file)):
+                list_of_preds.append({"bird":f"{classes_to_predict[np.argmax(preds[i])]}"})
 
-        for i in range(0, len(samples_from_file)):
-            list_of_preds.append({"bird":f"{classes_to_predict[np.argmax(preds[i])]}"})
-
-        predicted_bird = table_of_probabilities.nlargest(1, columns='certainty').ebird_code.values[0]
+            predicted_bird = table_of_probabilities.nlargest(1, columns='certainty').ebird_code.values[0]
 
         seconds_30 = 2160
 
