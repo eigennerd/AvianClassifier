@@ -10,7 +10,8 @@
     "intro_1": "Select from a set of test mp3's, or use widgets to upload or record your own birb - AI will attempt to guess it!",
     "success_msg": "AI guessed - ",
     "not_guessed_msg": "AI did not guess the birb: ",
-    "uploaded_msg": "Ground Truth of uploaded files unknown"
+    "uploaded_msg": "Ground Truth of uploaded files unknown",
+    "low_certainty_msg": "* - predictions with certainty <5 % considered unreliable"
   },
   "ru": {
     "header_1": "Chto za ptica? - Demo",

@@ -81,12 +81,15 @@ if os.path.exists(audiopath):
           f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
 
     col1.image(bird_url, width=400)
-    col3.markdown(pred_msg, unsafe_allow_html=True)
-    col3.subheader('Top 5 guesses:')
-    col3.write(table_of_predictions[['en', 'certainty']]. \
-               nlargest(5, columns='certainty'). \
-               style.format({"certainty": '{:,.2%}'.format})
-               )
+    with col3:
+        st.markdown(pred_msg, unsafe_allow_html=True)
+        st.subheader('Top 5 guesses:')
+        st.write(table_of_predictions[['en', 'certainty']]. \
+                   nlargest(5, columns='certainty'). \
+                   style.format({"certainty": '{:,.2%}'.format})
+                   )
+        if max(table_of_predictions['certainty'])<0.05:
+            st.markdown(f"""<span class='small-font'>{texts['low_certainty_msg']}</span>""", unsafe_allow_html=True)
 
     with st.beta_expander('Spectrogram', False):
         st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
