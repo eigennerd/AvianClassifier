@@ -53,7 +53,7 @@ if uploaded:
 if os.path.exists(audiopath):
     header_text.empty()
     st.sidebar.audio(audiopath)
-    table_of_predictions, spectrogram, bird_url, bird_scientific_name, preds = read_mp3(audiopath)
+    table_of_predictions, spectrogram, bird_url, bird_scientific_name, preds, credit = read_mp3(audiopath)
     idx=0
 
     if 'test_audio' in audiopath:
@@ -73,11 +73,15 @@ if os.path.exists(audiopath):
             pred_msg = f"<div> <span class='highlight blue'>{texts['uploaded_msg']}</span></div>"
 
     col1, col2, col3 = st.beta_columns([1, 1, 2])  # names and translation
-    col1.write(f"{texts['top_guess']} [{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
-    col2.write(
-          f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+    with col1:
+        st.write(f"{texts['top_guess']} [{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+        st.image(bird_url, width=400)
+        st.write(f'(c) Photo Credit: {credit}')
 
-    col1.image(bird_url, width=400)
+    with col2:
+        st.write(
+              f"[{get_vernacular(bird_scientific_name, lang=lang)}](http://{lang}.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+
     with col3:
         st.markdown(pred_msg, unsafe_allow_html=True)
         st.subheader('Top 5 guesses:')
@@ -98,9 +102,11 @@ if os.path.exists(audiopath):
         st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
 
     with st.beta_expander('Sightings', False):
-        map_pydeck = form_pydeck(audiopath)  # requires fixing (test_csv updated)
-        st.pydeck_chart(map_pydeck)
-
+        try:
+            map_pydeck = form_pydeck(audiopath)  # requires fixing (test_csv updated)
+            st.pydeck_chart(map_pydeck)
+        except:
+            pass
 #
 
 
