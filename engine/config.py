@@ -6,7 +6,7 @@ dict={
     "feature_2": "target"
   },
   "en": {
-        "header_1": "Guess Your Birb - Demo",
+        "header_1": "BirbGuessr - Demo",
         "intro_1": "Select from a set of test mp3's, or use widgets to upload or record your own birb - AI will attempt to guess it!",
         "success_msg": "AI guessed - ",
         "not_guessed_msg": "AI did not guess the birb: ",

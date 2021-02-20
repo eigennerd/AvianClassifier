@@ -53,7 +53,7 @@ if uploaded:
 if os.path.exists(audiopath):
     header_text.empty()
     st.sidebar.audio(audiopath)
-    table_of_predictions, spectrogram, bird_url, bird_scientific_name = read_mp3(audiopath)
+    table_of_predictions, spectrogram, bird_url, bird_scientific_name, preds = read_mp3(audiopath)
     idx=0
 
     if 'test_audio' in audiopath:
@@ -88,15 +88,19 @@ if os.path.exists(audiopath):
         if max(table_of_predictions['certainty'])<0.05:
             st.markdown(f"""<span class='small-font'>{texts['low_certainty_msg']}</span>""", unsafe_allow_html=True)
 
+    with st.sidebar.beta_expander('Download Prediction'):
+        st.markdown(download_data(
+                                    pd.DataFrame(preds,
+                                                 columns=sorted(table_of_predictions.gen +' '+ table_of_predictions.sp))),
+                    unsafe_allow_html=True)
+
     with st.beta_expander('Spectrogram', False):
         st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
 
-    with st.beta_expander('map', False):
-        try:
-            map_pydeck = form_pydeck(audiopath)  # requires fixing (test_csv updated)
-            st.pydeck_chart(map_pydeck)
-        except:
-            pass
+    with st.beta_expander('Sightings', False):
+        map_pydeck = form_pydeck(audiopath)  # requires fixing (test_csv updated)
+        st.pydeck_chart(map_pydeck)
 
+#
 
 

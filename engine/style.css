@@ -15,6 +15,10 @@
   background-color: lightcoral;
 }
 
+.gray {
+  background-color: light-gray;
+}
+
 .small-font {
     font-size: 10px !important;
     font-weight: bold;

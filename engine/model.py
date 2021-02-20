@@ -148,7 +148,8 @@ def read_mp3(uploaded_mp3, model = load_model_to_st()):
                output_array[0:seconds_30, ], \
                birds_df.loc[birds_df.ebird_code == predicted_bird].url.values[0], \
                "{} {}".format(birds_df.loc[birds_df.ebird_code == predicted_bird].gen.values[0],
-                              birds_df.loc[birds_df.ebird_code == predicted_bird].sp.values[0])
+                              birds_df.loc[birds_df.ebird_code == predicted_bird].sp.values[0]), \
+                preds
 
 
     except Exception as e:

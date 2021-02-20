@@ -6,6 +6,8 @@ import pydeck as pdk
 import json
 import requests
 import re
+import base64
+from datetime import datetime
 from googletrans import Translator
 from settings import *
 
@@ -38,12 +40,12 @@ def form_pydeck(audiopath):
     df = extract_coords(audiopath, train_data, meta)
 
     layer = pdk.Layer(
-        'ColumnLayer',
+        'HexagonLayer',
         data=df,
         get_position=["lng", "lat"],
         get_elevation="alt",
         elevation_scale=2000,
-        radius=500,
+        radius=50000,
         get_fill_color='[180, 0, 200, 140]',
         pickable=True,
         auto_highlight=True,
@@ -52,7 +54,7 @@ def form_pydeck(audiopath):
     view = pdk.ViewState(
         longitude=df['lng'].values[0],
         latitude=df['lat'].values[0],
-        zoom=10,
+        zoom=2,
         min_zoom=1,
         max_zoom=23,
         pitch=50,
@@ -65,7 +67,7 @@ def form_pydeck(audiopath):
     )
 
 
-def extract_coords(audiopath, train_path, meta_path):
+def extract_coords(audiopath, train_path='data/train.csv', meta_path='data/test_birds.csv'):
     '''
     :param audiopath:
     :param train_path:
@@ -73,8 +75,10 @@ def extract_coords(audiopath, train_path, meta_path):
     :return:
     '''
     metadata = pd.read_csv(meta_path, encoding="ISO-8859-1", low_memory=False)
-    num = float(audiopath.split('/')[-1].split('.')[0][4:])
-    ebird_code = metadata[metadata['o'] == num]['ebird_code'].values[0]
+   # st.write(audiopath.split('/')[-1].split('.')[0][4:])
+    num = float(audiopath.split('TEST')[-1].split('.')[0][:])
+   # st.write(num)
+    ebird_code = metadata[metadata['ind'] == num]['ebird_code'].values[0]
 
     trn_df = pd.read_csv(train_path, low_memory=False)
 
@@ -138,3 +142,14 @@ def local_css(file_name):
         st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
 
 
+def download_data(df):
+
+    '''
+        downloader
+    '''
+    csv = df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()
+    filename = f'Table_{datetime.now()}'
+    href = f'<div> <span class="highlight gray"> <a href="data:file/csv;base64,{b64}" download="{filename}.csv">`   CSV    `</a> </span> </div>'
+
+    return href
