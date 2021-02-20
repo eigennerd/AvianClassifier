@@ -23,9 +23,10 @@ birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 classes_to_predict = sorted(birds_df.ebird_code.unique())  # TODO: add 'nocall' later
 
 
-def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model/'):
+def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model_v2/'):
     '''
         downloads model and other data from the public bucket
+        model_v2 : 162 sp trained on up to 2000 5s images
     '''
     storage_client = storage.Client.create_anonymous_client()
 
@@ -41,7 +42,7 @@ def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model/'):
 
 def check_download_data():
     ## check for model
-    if os.path.exists('model'):
+    if os.path.exists('model_v2'):
         pass
     else:
         with st.spinner('We are fetching some data for initial run, please allow a few moments...'):
@@ -54,7 +55,7 @@ def check_download_data():
             download_from_bucket(prefix='test_audio/')
 
 @st.cache(allow_output_mutation=True)
-def load_model_to_st(model_path='model'):
+def load_model_to_st(model_path='model_v2'):
     '''
         loads complete model architecture with weights
     '''
