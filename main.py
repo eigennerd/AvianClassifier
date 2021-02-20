@@ -12,7 +12,7 @@ from PIL import Image
 
 local_css("engine/style.css")
 
-lang = st.sidebar.radio(label='Language options:', options=['en', 'ua', 'ru', 'pl'], key='1')
+lang = st.sidebar.radio(label='Language options:', options=['en', 'uk', 'ru', 'pl'], key='1')
 st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 texts = config_json()[lang]
