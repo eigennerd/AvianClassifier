@@ -74,7 +74,7 @@ if os.path.exists(audiopath):
 
     col1, col2, col3 = st.beta_columns([1, 1, 2])  # names and translation
     with col1:
-        st.write(f"{texts['top_guess']} [{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})")
+        st.write(f"""{texts['top_guess']} <span class='font-italic'>[{bird_scientific_name}](http://en.wikipedia.org/wiki/{re.sub(' ', '_', bird_scientific_name)})</span></div>""", unsafe_allow_html=True)
         st.image(bird_url, width=400)
         st.write(f'(c) Photo Credit: {credit}')
 

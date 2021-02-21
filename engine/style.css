@@ -23,3 +23,7 @@
     font-size: 10px !important;
     font-weight: bold;
 }
+
+.font-italic {
+  font-style: italic !important;
+}
