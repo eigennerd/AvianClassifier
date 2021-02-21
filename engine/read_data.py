@@ -147,6 +147,11 @@ def download_data(df):
     '''
         downloader
     '''
+    new_colnames = list(df.columns.values)
+    new_colnames.insert(0, 'Frame5sec')
+    df=df.assign(Frame5sec=lambda x: 5 * x.index)
+    df=df.reindex(columns=new_colnames)
+
     csv = df.to_csv(index=False)
     b64 = base64.b64encode(csv.encode()).decode()
     filename = f'Table_{datetime.now()}'

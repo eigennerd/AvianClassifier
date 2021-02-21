@@ -17,6 +17,11 @@ Use Docker. Docker allows running the app in a standardized isolated environment
  - to run the app  - ```docker run -p 8501:8501 avianclassifier```
  - Open your [browser](http://localhost:8501/) @ localhost:8501
 
+Don't forget to turn off the container after no longer in use. Use the Docker UI or in Terminal:  
+ - ```docker ps -a``` to see all containers  
+ - ```docker kill <<<id>>>``` to kill the working container
+ - ```docker rm <<<id>>>``` to remove the container
+
 2. [Observe the app Online](https://share.streamlit.io/eigennerd/avianclassifier/main/main.py)
 
 

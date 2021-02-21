@@ -92,7 +92,8 @@ if os.path.exists(audiopath):
         if max(table_of_predictions['certainty'])<0.05:
             st.markdown(f"""<span class='small-font'>{texts['low_certainty_msg']}</span>""", unsafe_allow_html=True)
 
-    with st.sidebar.beta_expander('Download Prediction'):
+
+    with st.sidebar.beta_expander('Download By-Frame Prediction'):
         st.markdown(download_data(
                                     pd.DataFrame(preds,
                                                  columns=sorted(table_of_predictions.gen +' '+ table_of_predictions.sp))),
@@ -101,7 +102,7 @@ if os.path.exists(audiopath):
     with st.beta_expander('Spectrogram', False):
         st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
 
-    with st.beta_expander('Sightings', False):
+    with st.beta_expander('Historical Sightings', False):
         try:
             map_pydeck = form_pydeck(audiopath)  # requires fixing (test_csv updated)
             st.pydeck_chart(map_pydeck)
