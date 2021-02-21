@@ -117,8 +117,9 @@ def handle_uploaded(file):
     if not os.path.exists('data/tmp'):
         os.mkdir('data/tmp')
 
-    with open(name, 'wb') as f:
-        f.write(file.read())
+    with st.spinner('Receiving bytes'):
+        with open(name, 'wb') as f:
+            f.write(file.read())
     return name
 
 
