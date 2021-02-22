@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from scipy.special import logit
 import streamlit as st
 import plotly.express as px
@@ -13,11 +14,15 @@ def plot_timeline(df):
     def log_odds(set_of_predictions):
         return 1 / (1 + np.exp(-(logit(set_of_predictions)).mean(axis=0)))
 
-    fig = px.line(df. \
-                rolling(3, center=True, closed='both', min_periods=1). \
-                apply(log_odds). \
-                assign(FrameSec=lambda x: 5 * x.index). \
-                melt(id_vars=['FrameSec'], var_name='sp', value_name='logit')
+    df = df. \
+        rolling(3, center=True, closed='both', min_periods=1). \
+        apply(log_odds). \
+        assign(FrameSec=lambda x: 5*x.index). \
+        melt(id_vars=['FrameSec'], var_name='sp', value_name='logit')
+
+    df['FrameSec'] = df.FrameSec.apply(lambda x: pd.to_datetime(x, unit='s').strftime("%H:%M:%S"))
+
+    fig = px.line(df
               , x="FrameSec"
               , y="logit"
               , color="sp"
@@ -29,9 +34,9 @@ def plot_timeline(df):
                  }
               , title="")
     fig.add_shape(type='line',
-                  x0=0,
+                  x0=min(df.FrameSec),
                   y0=0.8,
-                  x1=len(df)*5-5,
+                  x1=max(df.FrameSec),
                   y1=0.8,
                   line=dict(color='Red', dash='dash'),
                   opacity=0.6
