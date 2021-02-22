@@ -3,6 +3,7 @@ st.set_page_config(layout='wide')
 from engine.config import *
 from engine.read_data import *
 from engine.model import *
+from engine.visual import *
 import os
 from PIL import Image
 
@@ -94,12 +95,16 @@ if os.path.exists(audiopath):
 
 
     with st.sidebar.beta_expander('Download By-Frame Prediction'):
-        st.markdown(download_data(
-                                    pd.DataFrame(preds,
-                                                 columns=sorted(table_of_predictions.gen +' '+ table_of_predictions.sp))),
-                    unsafe_allow_html=True)
+        st.markdown(
+            download_data(
+                pd.DataFrame(preds, columns=sorted(table_of_predictions.gen +' '+ table_of_predictions.sp))),
+            unsafe_allow_html=True
+        )
 
-    with st.beta_expander('Spectrogram', False):
+    with st.beta_expander('Inference', False):
+        plot_timeline(
+            pd.DataFrame(preds,columns=sorted(table_of_predictions.gen +' '+ table_of_predictions.sp))
+        )
         st.image(Image.fromarray(np.rot90(spectrogram)), use_column_width=True)
 
     with st.beta_expander('Historical Sightings', False):
