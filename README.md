@@ -8,21 +8,21 @@ Yet another Streamlit app to help identify birds by their song
 Use Docker. Docker allows running the app in a standardized isolated environment on your local machine or deployed on cloud
 
 
- - Make sure [Docker](https://docs.docker.com/desktop/) is installed and running
- - Ensure [GIT](https://git-scm.com/download/mac) is installed and running
+ - make sure [Docker](https://docs.docker.com/desktop/) is installed and running
+ - make sure [GIT](https://git-scm.com/download/mac) is installed and running
  - navigate to any folder in Terminal
- - to clone the repository - ```git clone https://github.com/eigennerd/AvianClassifier.git```
+ - clone the repository - ```git clone https://github.com/eigennerd/AvianClassifier.git```
  - navigate to the folder - ```cd AvianClassifier```  
- - to build the container - ```docker build -t avianclassifier .``` wait until the build is complete
- - to run the app  - ```docker run -p 8501:8501 avianclassifier```
+ - build the container - ```docker build -t avianclassifier .``` Mind the . dot at the end! wait until the build is complete.
+ - run the app  - ```docker run -p 8501:8501 avianclassifier```
  - Open your [browser](http://localhost:8501/) @ localhost:8501
 
-Don't forget to turn off the container after no longer in use. Use the Docker UI or in Terminal:  
+Don't forget to turn off the container after no longer in use. Use the Docker UI or via Terminal:  
  - ```docker ps -a``` to see all containers  
  - ```docker kill <<<id>>>``` to kill the working container
  - ```docker rm <<<id>>>``` to remove the container
 
-2. [Observe the app Online](https://share.streamlit.io/eigennerd/avianclassifier/main/main.py)
+2. [Observe the app Online](https://share.streamlit.io/eigennerd/avianclassifier/main/main.py). <- Follow the link
 
 
 ### DISCLAIMER ###
