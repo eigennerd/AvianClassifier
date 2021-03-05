@@ -10,7 +10,7 @@ import streamlit as st
 from uuid import uuid4
 from librosa.feature import melspectrogram
 import tensorflow as tf
-from tensorflow.keras.applications.resnet50 import preprocess_input
+from tensorflow.keras.applications.efficientnet import preprocess_input
 from tensorflow.compat.v1.keras import backend as K
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from pathlib import Path
@@ -23,10 +23,10 @@ birds_df = pd.read_csv('data/test_birds.csv', encoding='latin1')
 classes_to_predict = sorted(birds_df.ebird_code.unique())  # TODO: add 'nocall' later
 
 
-def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model_v2/'):
+def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model_v3_ENB3/'):
     '''
         downloads model and other data from the public bucket
-        model_v2 : 162 sp trained on up to 2000 5s images
+        model_v3_ENB3 : 223sp trained on up to 2000 5s images, EfficientNetB3
     '''
     storage_client = storage.Client.create_anonymous_client()
 
@@ -42,7 +42,7 @@ def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model_v2/
 
 def check_download_data():
     ## check for model
-    if os.path.exists('model_v2'):
+    if os.path.exists('model_v3_ENB3'):
         pass
     else:
         with st.spinner('We are fetching some data for initial run, please allow a few moments...'):
@@ -55,7 +55,7 @@ def check_download_data():
             download_from_bucket(prefix='test_audio/')
 
 @st.cache(allow_output_mutation=True)
-def load_model_to_st(model_path='model_v2'):
+def load_model_to_st(model_path='model_v3_ENB3'):
     '''
         loads complete model architecture with weights
     '''
