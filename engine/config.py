@@ -7,7 +7,7 @@ dict={
   },
   "en": {
         "header_1": "BirbGuessr - Demo",
-        "intro_1": "Select from a set of test mp3's, or use widgets to upload or record your own birb - AI will attempt to guess it!",
+        "intro_1": "Select from a set of test mp3's, or upload your own birb - AI will attempt to guess it!",
         "success_msg": "AI guessed - ",
         "not_guessed_msg": "AI did not guess the birb: ",
         "uploaded_msg": "Ground Truth of uploaded files unknown",
