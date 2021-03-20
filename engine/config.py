@@ -7,7 +7,7 @@ dict={
   },
   "en": {
         "header_1": "Heard-A-Bird: Birdcall Identifier App",
-        "intro_1": "Upload your audio (or use from a set of pre-loaded mp3's) and get a detailed prediction. Current model recognizes audiosignatures from 222 most common European species",
+        "intro_1": "Upload your audio (or use pre-loaded mp3's) to get a prediction and sound-alikes. Currently recognizing over 200 most common European species",
         "success_msg": "AI guessed - ",
         "not_guessed_msg": "AI did not guess the birb: ",
         "uploaded_msg": "Ground Truth of uploaded files unknown",
