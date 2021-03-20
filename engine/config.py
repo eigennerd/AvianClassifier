@@ -6,8 +6,8 @@ dict={
     "feature_2": "target"
   },
   "en": {
-        "header_1": "Heard a Bird? - AI to identify!",
-        "intro_1": "Upload your bird or check out a set of pre-loaded mp3's",
+        "header_1": "Heard-A-Bird: Birdcall Identifier App",
+        "intro_1": "Upload your audio (or use from a set of pre-loaded mp3's) and get a detailed prediction. Current model recognizes audiosignatures from 222 most common European species",
         "success_msg": "AI guessed - ",
         "not_guessed_msg": "AI did not guess the birb: ",
         "uploaded_msg": "Ground Truth of uploaded files unknown",
@@ -18,8 +18,8 @@ dict={
         "top_5": "Top 5 guesses: "
   },
     "ru": {
-        "header_1": "Птичкоугадайка",
-        "intro_1": "Загрузи свою запись или выбери тестовые мп3.",
+        "header_1": "Пернатоугадайка",
+        "intro_1": "Загрузи свою запись или выбери из тестовых мп3.",
         "success_msg": "AI угадал - ",
         "not_guessed_msg": "AI не угадал :(  ",
         "uploaded_msg": "Не знаю правильный ответ",
