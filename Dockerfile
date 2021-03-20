@@ -5,7 +5,8 @@ RUN pip install -r /app/requirements.txt \
  && apt-get upgrade -y \
  && apt-get install libsndfile1 -y \
  && apt-get install ffmpeg -y
+RUN pip install tensorflow --no-cache-dir
 COPY . /app
 WORKDIR /app
 EXPOSE 8501
-CMD streamlit run ./main.py
+ENTRYPOINT ["streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]

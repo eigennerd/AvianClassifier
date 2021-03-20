@@ -1,7 +1,6 @@
-SoundFile>=0.10.3.post1
-librosa>=0.8.0
-streamlit>=0.75
-tensorflow>=2.4.0
+SoundFile==0.10.3.post1
+librosa==0.8.0
+streamlit==0.79.0
 plotly>=4.4.1
 pydot>=1.4.1
 watchdog>=1.0.2
