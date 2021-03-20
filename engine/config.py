@@ -6,8 +6,8 @@ dict={
     "feature_2": "target"
   },
   "en": {
-        "header_1": "BirbGuessr - Demo",
-        "intro_1": "Select from a set of test mp3's or upload your own birb - AI will attempt to guess it!",
+        "header_1": "Heard a Bird? - AI to identify!",
+        "intro_1": "Upload your bird or check out a set of pre-loaded mp3's",
         "success_msg": "AI guessed - ",
         "not_guessed_msg": "AI did not guess the birb: ",
         "uploaded_msg": "Ground Truth of uploaded files unknown",
@@ -18,8 +18,8 @@ dict={
         "top_5": "Top 5 guesses: "
   },
     "ru": {
-        "header_1": "Птицеугадыватель 2021 - Демо",
-        "intro_1": "Выбери тестовый мп3 или загрузи свою запись",
+        "header_1": "Птичкоугадайка",
+        "intro_1": "Загрузи свою запись или выбери тестовые мп3.",
         "success_msg": "AI угадал - ",
         "not_guessed_msg": "AI не угадал :(  ",
         "uploaded_msg": "Не знаю правильный ответ",
@@ -31,7 +31,7 @@ dict={
   },
     "uk": {
         "header_1": "Птахоздогадайка 2021 - Демо",
-        "intro_1": "Вибери тестовий мп3 або загрузи свій запис",
+        "intro_1": "Загрузи свій запис або вибери тестовий мп3",
         "success_msg": "AI вгадав - ",
         "not_guessed_msg": "AI не вгадав :(  ",
         "uploaded_msg": "Не знаю правильну відповідь",
