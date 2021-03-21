@@ -12,9 +12,10 @@ from PIL import Image
 ####
 
 local_css("engine/style.css")
-
-lang = st.sidebar.radio(label='Language options:', options=['en', 'uk', 'ru', 'pl'], key='1')
-st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+with st.sidebar.beta_expander('Language'):
+    lang = st.radio(label='', options=['en', 'uk', 'ru', 'pl'], key='1',
+                    format_func={"en": "en", "uk": "ua", "ru": "ru", "pl": "pl"}.get)
+    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
 texts = config_json()[lang]
 # declare placeholders
@@ -38,13 +39,15 @@ audiofiles = get_audio_files_in_dir(test_dir)
 if len(audiofiles) == 0:
     st.write("Put some audio files in your test directory (%s) to activate this player." % test_dir)
 else:
-    filename = st.sidebar.selectbox(texts['select_mp3'], audiofiles, 0)
+    st.sidebar.subheader('')
+    filename = st.sidebar.selectbox(texts['select_mp3'], audiofiles, 0, help=texts['filename_help'])
     audiopath = os.path.join(test_dir, filename)
 
 #####
 ## SIDEBAR UPLOAD BLOCK
 #####
-uploaded = st.sidebar.file_uploader(texts['upload_mp3'])  # supposed to be an mp3 uploaded file
+st.sidebar.subheader('')
+uploaded = st.sidebar.file_uploader((texts['upload_mp3']), help=texts['fileupload_help'])  # supposed to be an mp3 uploaded file
 if uploaded:
     audiopath = handle_uploaded(uploaded)
 
