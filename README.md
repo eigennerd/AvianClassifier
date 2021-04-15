@@ -22,7 +22,7 @@ Don't forget to turn off the container after no longer in use. Use the Docker UI
  - ```docker kill <<<id>>>``` to kill the working container
  - ```docker rm <<<id>>>``` to remove the container
 
-2. [Observe the app Online](https://share.streamlit.io/eigennerd/avianclassifier/main/main.py). <- Follow the link
+2. Heard a bird? [Check it out with the app Online](http://heardabird.cloud).
 
 
 ### DISCLAIMER ###
