@@ -16,7 +16,7 @@ dict={
         "not_guessed_msg": "AI missed the bird: ",
         "uploaded_msg": "Ground Truth of uploaded files unknown",
         "low_certainty_msg": "* - predictions with certainty <5 % considered unreliable",
-        "inference_expl": "Mel-spectrograms (black-and-white) show how the machine perceives the audio. For every 5-second frame the algo returns probabilities (odds) that any of 350+ known species are present in the audiotrack (colored plot). Use Plotly UI elements to zoom in and select.",
+        "inference_expl": "Mel-spectrograms (black-and-white) show how the machine perceives the audio. For every 5-second frame the Heard-A-Bird returns odds of any of 350+ known species being present in the audiotrack (colored plot). Use Plotly UI elements to zoom in and select.",
         "select_mp3": "Select mp3 from validation batch",
         "upload_mp3": "Upload a pre-recorded mp3",
         "top_guess": "Top guess: ",
