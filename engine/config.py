@@ -7,7 +7,7 @@ dict={
   },
   "en": {
         "header_1": "Heard-A-Bird: Birdcall Identifier App",
-        "intro_1": "Upload your audio (or use pre-loaded mp3's) to get a prediction and sound-alikes. Currently recognizing over 350 most species of Europe and North America",
+        "intro_1": "Upload your audio (or use pre-loaded mp3's) to get a prediction and sound-alikes. Currently recognizing over 350 most common species of Europe and North America",
         "lang": "Language",
         "Geo": "Source Geo",
         "filename_help": "Model has never seen these",
