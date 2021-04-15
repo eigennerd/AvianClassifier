@@ -26,7 +26,7 @@ classes_to_predict = sorted(birds_df.ebird_code.unique())  # TODO: add 'nocall' 
 def download_from_bucket(bucket_name='acoustic-scarab-bucket', prefix='model_v4_ENB4/'):
     '''
         downloads model and other data from the public bucket
-        model_v3_ENB3 : 223sp trained on up to 2000 5s images, EfficientNetB3
+        model_v4_ENB4 : 364species trained on up to 2000 5s images, EfficientNetB4
     '''
     storage_client = storage.Client.create_anonymous_client()
 
