@@ -105,6 +105,7 @@ if os.path.exists(audiopath):
         )
 
     with st.beta_expander('Inference', False):
+        st.write(texts['inference_expl'])
         plot_timeline(
             pd.DataFrame(preds,columns=sorted(table_of_predictions.gen +' '+ table_of_predictions.sp))
         )

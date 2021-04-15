@@ -28,17 +28,17 @@ def plot_timeline(df):
               , color="sp"
               , hover_name="sp"
               , labels={
-                     "logit": "Probability (Log Odds)",
+                     "logit": "Probability (Log Odds)<br>No Bird        |        Bird",
                      "FrameSec": "Time",
                      "sp": "Species"
                  }
               , title="")
     fig.add_shape(type='line',
                   x0=min(df.FrameSec),
-                  y0=0.8,
+                  y0=0.5,
                   x1=max(df.FrameSec),
-                  y1=0.8,
-                  line=dict(color='Red', dash='dash'),
+                  y1=0.5,
+                  line=dict(color='darkgray', dash='dash'),
                   opacity=0.6
                 )
     fig.update_layout(showlegend=False, template='plotly_white')
