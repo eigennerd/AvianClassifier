@@ -16,13 +16,14 @@ dict={
         "not_guessed_msg": "AI missed the bird: ",
         "uploaded_msg": "Ground Truth of uploaded files unknown",
         "low_certainty_msg": "* - predictions with certainty <5 % considered unreliable",
+        "inference_expl": "Essentially the audio is translated into mel-spectrograms - shown as black-and-white pictures below. The machine then breaks the continuous spectra in 5second pieces, frames, and checks if the given spectra matches any of the 200 species in its memory",
         "select_mp3": "Select mp3 from validation batch",
         "upload_mp3": "Upload a pre-recorded mp3",
         "top_guess": "Top guess: ",
         "top_5": "Top 5 guesses: "
   },
     "ru": {
-        "header_1": "Пернатоугадайка - Сервис аудиоидентификации птиц",
+        "header_1": "Пернатоугадайка - сервис аудиоидентификации птиц",
         "intro_1": "Загрузи свою запись или выбери одну из тестовых мп3.",
         "lang": "Язык",
         "Geo": "Локализация",
@@ -39,7 +40,7 @@ dict={
   },
     "uk": {
         "header_1": "Птахоздогадайка - сервіс аудіорозпізнавання пернатих",
-        "intro_1": "Загрузи свій запис або вибери один з тестових мп3. Модель розпізнає більше 200 найрозповсюдженіших птахів Європи",
+        "intro_1": "Завантажуй свій запис або вибери один з тестових мп3. Модель розпізнає більше 200 найрозповсюдженіших птахів Європи",
         "lang": "Мова",
         "Geo": "Локація",
         "filename_help": "Ці записи моделі не відомі",
